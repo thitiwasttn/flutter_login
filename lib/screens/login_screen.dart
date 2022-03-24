@@ -11,6 +11,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
+  String email = '';
+  String password = '';
+  TextStyle kTextFiled = const TextStyle(fontSize: 20, color: Colors.blueGrey);
+
+  TextStyle kSubmitText = const TextStyle(fontSize: 20, color: Colors.white);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget emailFormField() {
     return TextFormField(
+      style: kTextFiled,
       decoration: const InputDecoration(
           labelText: "email",
           hintText: "pass your email",
@@ -41,6 +47,9 @@ class _LoginScreenState extends State<LoginScreen> {
       keyboardType: TextInputType.emailAddress,
       validator: (String? value) {
         return validateEmail(value);
+      },
+      onSaved: (String? value) {
+        email = value!;
       },
     );
   }
@@ -69,9 +78,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget passwordFormField() {
     return TextFormField(
+      style: kTextFiled,
       obscureText: true,
       validator: (String? value) {
         return passwordValidate(value);
+      },
+      onSaved: (String? value) {
+        password = value!;
       },
       decoration: const InputDecoration(
           labelText: "password",
@@ -84,22 +97,24 @@ class _LoginScreenState extends State<LoginScreen> {
     return SizedBox(
       width: 100,
       child: FittedBox(
+          child: Theme(
         child: ElevatedButton(
           onPressed: () {
             print('formKey ${formKey.currentState}');
 
             bool? validated = formKey.currentState?.validate();
             print('validated: $validated');
-            if(validated != null && validated) {
+            if (validated != null && validated) {
               formKey.currentState?.save();
             }
           },
-          child: const Text(
+          child: Text(
             'เข้าสู่ระบบ',
-            style: TextStyle(fontSize: 15),
+            style: kSubmitText,
           ),
         ),
-      ),
+        data: ThemeData.light(),
+      )),
     );
   }
 
@@ -114,7 +129,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   String? passwordValidate(String? password) {
-
     String? result;
     String errorMessage = "password is wrong";
 

@@ -12,12 +12,39 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('ล๊อกอินฟอร์ม'),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey)
+            .copyWith(secondary: Colors.redAccent.shade400),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            fontFamily: 'Prompt',
+          ),
         ),
-        body: LoginScreen(),
       ),
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text('ล๊อกอินฟอร์ม'),
+          ),
+          body: Container(
+              child: DefaultTextStyle(
+            style: const TextStyle(fontFamily: 'Prompt'),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 100,
+                  ),
+                  LoginScreen(),
+                  SizedBox(
+                    height: 300,
+                  )
+                ],
+              ),
+            ),
+          ))),
     );
   }
 }
